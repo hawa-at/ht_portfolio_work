@@ -172,7 +172,6 @@ portfolio_risk <- merged_data %>%
   )
 
 portfolio_risk
-write.csv(portfolio_risk, "portfolio_risk_matrix.csv", row.names = FALSE)
 
 ggplot(portfolio_risk, aes(x = Avg_GTMI, y = Avg_Outcome, color = Tier, size = Projects)) +
   geom_point(alpha = 0.8) +
