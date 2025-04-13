@@ -19,7 +19,27 @@ ui <- fluidPage(
     mainPanel(
       tabsetPanel(
         tabPanel("Risk Matrix", plotOutput("riskPlot", height = "600px")),
-        tabPanel("Country Table", DTOutput("countryTable"))
+        tabPanel("Country Table", DTOutput("countryTable")),
+        tabPanel("GTMI Overview", 
+                 h3("GovTech Maturity Index (GTMI) - 2022"),
+                 p("The GTMI, or GovTech Maturity Index, is a composite index developed by the World Bank to assess the digital maturity of governments worldwide."),
+                 p("It ranges from 0 to 1, where higher values indicate stronger digital government infrastructure and services."),
+                 tags$ul(
+                   tags$li("Group A: High Maturity (GTMI ≥ 0.7)"),
+                   tags$li("Group B: Upper-Mid Maturity"),
+                   tags$li("Group C: Lower-Mid Maturity"),
+                   tags$li("Group D: Low Maturity (GTMI < 0.4)")
+                 ),
+                 p("The GTMI is based on multiple pillars, including:"),
+                 tags$ul(
+                   tags$li("Core Government Systems (Gov Sys)"),
+                   tags$li("Public Service Delivery (e-Serv)"),
+                   tags$li("Digital ID (ID4D)"),
+                   tags$li("Open Government (Open Gov)"),
+                   tags$li("Digital Enablers (DT & Infrastructure)")
+                 ),
+                 DT::DTOutput("gtmiTable")
+        )
       )
     )
   )
@@ -34,6 +54,10 @@ server <- function(input, output) {
     } else {
       filter(portfolio_risk, Tier == input$tier)
     }
+  })
+  
+  output$gtmiTable <- renderDT({
+    datatable(gtmi_2022, options = list(pageLength = 10, scrollX = TRUE))
   })
   
   output$riskPlot <- renderPlot({

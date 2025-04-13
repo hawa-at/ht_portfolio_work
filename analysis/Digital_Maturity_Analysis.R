@@ -4,6 +4,7 @@ library(stringr)
 
 
 getwd()
+setwd("/Users/hawatoumbou/Documents/GitHub/ht_portfolio_work")
 projects <- read_excel("data/Clean_Project.xlsx")
 govtech <- read_excel("data/Clean_GovTech.xlsx")
 
@@ -224,3 +225,11 @@ ggplot(portfolio_risk, aes(x = Avg_GTMI, y = Avg_Outcome, color = Tier, size = P
     axis.text = element_text(size = 10)
   )
 
+portfolio_risk <- portfolio_risk %>%
+  left_join(desi_summary, by = "Country") %>%
+  mutate(Weak_Area = case_when(
+    DESI_AI < 0.3 ~ "Low AI Adoption",
+    DESI_Cloud < 0.3 ~ "Low Cloud Use",
+    DESI_eGov < 0.3 ~ "eGov Weakness",
+    TRUE ~ "None"
+  ))
