@@ -233,3 +233,5 @@ portfolio_risk <- portfolio_risk %>%
     DESI_eGov < 0.3 ~ "eGov Weakness",
     TRUE ~ "None"
   ))
+
+
